@@ -1,0 +1,6 @@
+@ObjectRecognitionAPI_HostAddress = http://localhost:5035
+
+GET {{ObjectRecognitionAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

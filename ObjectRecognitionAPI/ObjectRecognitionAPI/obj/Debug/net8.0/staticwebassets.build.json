@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "laEjwBpmuEtgoN742qGMwj0nUm47XM0bCzHVcY9HlM4=",
+  "Source": "ObjectRecognitionAPI",
+  "BasePath": "_content/ObjectRecognitionAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

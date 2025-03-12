@@ -42,7 +42,6 @@ public class ObjectRecognitionController : ControllerBase
 
     //private string GetFlowerName(List<float> prediction)
     //{
-    //    // Listă cu numele florilor, trebuie să fie exact în ordinea claselor modelului tău
     //    string[] flowerLabels = new[] { "Rose", "Tulip", "Sunflower", "Daisy", "Dandelion" };
 
     //    if (prediction == null || prediction.Count == 0)
@@ -55,7 +54,7 @@ public class ObjectRecognitionController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> AnalyzeFlower(IFormFile image) // Metoda este acum async
+    public async Task<IActionResult> AnalyzeFlower(IFormFile image)
     {
         if (image == null || image.Length == 0)
         {
@@ -65,27 +64,26 @@ public class ObjectRecognitionController : ControllerBase
         using var stream = image.OpenReadStream();
         var binaryData = BinaryData.FromStream(stream);
 
-        // Inițializăm clientul cu endpoint și cheie direct
         var client = new ImageAnalysisClient(new Uri(_visionSettings.Endpoint), new AzureKeyCredential(_visionSettings.ApiKey));
 
-        var visualFeatures = VisualFeatures.Tags; // Folosește VisualFeatures
+        var visualFeatures = VisualFeatures.Tags;
 
         var analysisOptions = new ImageAnalysisOptions()
         {
-            Language = "ro" // Specificăm limba română
+            Language = "ro"
         };
 
-        var result = await client.AnalyzeAsync(binaryData, visualFeatures, analysisOptions); // Folosește AnalyzeAsync
+        var result = await client.AnalyzeAsync(binaryData, visualFeatures, analysisOptions);
 
         if (result.Value.Tags != null && result.Value.Tags.Values.Count > 0)
         {
-            var flowerTags = result.Value.Tags.Values.Select(tag => new
+            var objectTags = result.Value.Tags.Values.Select(tag => new
             {
-                NumeFloare = tag.Name,
-                Procentaj = tag.Confidence * 100 // Convertim confidence la procentaj
+                NumeObiect = tag.Name,
+                Procentaj = tag.Confidence * 100
             }).ToList();
 
-            return Ok(new { FlowerTags = flowerTags });
+            return Ok(new { ObjectTags = objectTags });
         }
         else
         {
